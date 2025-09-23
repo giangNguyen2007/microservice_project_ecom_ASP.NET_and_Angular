@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+option csharp_namespace = "YourApp.Grpc";
+
+package product;
+
+service ProductService {
+  
+  // Reserve stock for products in an order, called when an order is created, but not yet paid
+  rpc ReserveProductStock (ReservationRequest) returns (ReservationReply);
+  
+  // Consume reserved stock once the payment is confirmed as successful  
+  rpc UpdateProductStock (StockUpdateRequest) returns (StockUpdateReply);
+  
+  // release reserved stock if the order is cancelled or payment fails
+  rpc ReleaseProductStock (StockRealeaseRequest) returns (StockReleaseReply);
+}
+
+message SingleOrderItem {
+  string productId = 1;
+  int32 quantity = 2;
+  // add other fields as needed
+}
+
+message ReservationRequest {
+  repeated SingleOrderItem orderItemList = 1;
+}
+
+message ReservationReply {
+  bool success = 2;
+  string errorMessage = 3;
+}
+
+//==========================================
+
+message StockUpdateRequest {
+  repeated SingleOrderItem orderItemList = 1;
+}
+
+message StockUpdateReply {
+  bool updateSuccess = 1;
+  string errorMessage = 2;
+}
+
+//==========================================
+
+message StockRealeaseRequest {
+  repeated SingleOrderItem orderItemList = 1;
+}
+
+message StockReleaseReply {
+  bool success = 1;
+  string errorMessage = 2;
+}

@@ -1,0 +1,23 @@
+@Game.API_HostAddress = http://localhost:5164
+
+GET https://localhost:7155/game/
+Accept: application/json
+
+###
+
+GET http://localhost:5164/game/
+Accept: application/json
+
+###
+
+POST https://localhost:5164/game/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsIm5iZiI6MTc1MjEzODY2NywiZXhwIjoxNzUyNzQzNDY3LCJpYXQiOjE3NTIxMzg2NjcsImlzcyI6Ik15QXBwIiwiYXVkIjoiTXlBcHBVc2VycyJ9.LWtG0zVZdgc53ynb7kSO0BrOhqEaDjowLS1iE9a53cw
+
+{
+   "Name" : "Mario",
+  "Genre": "Adventure Children"
+}
+
+
+

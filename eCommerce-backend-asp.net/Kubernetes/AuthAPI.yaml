@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-api-dpl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-api
+  template:
+    metadata:
+      labels:
+        app: auth-api
+    spec:
+      containers:
+        - name: title
+          image: auth-api:helloDotNet
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          env:
+            - name: DB_HOST
+              value: postgres-auth-service
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_NAME
+              value: mydb
+            - name: DB_USER
+              value: postgres
+            - name: DB_PASSWORD
+              value: postgres
+              
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-api-service
+spec:
+  selector:
+    app: auth-api
+  ports:
+    - port: 80
+      targetPort: 80
+  type: ClusterIP
+      

@@ -1,0 +1,6 @@
+
+
+GRPC localhost:7155/product.ProductService/GetProductInfo
+{
+    "productId" : "0193bf62-dc7f-45c9-8667-3ee7ce5a7e11"
+}

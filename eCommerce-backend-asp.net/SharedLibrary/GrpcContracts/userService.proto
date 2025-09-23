@@ -1,0 +1,18 @@
+﻿syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+package myGrpc;
+
+service UserService {
+  rpc GetUserInfo (UserRequest) returns (UserReply);
+}
+
+message UserRequest {
+  string userEmail = 1;
+}
+
+message UserReply {
+  bool found = 1;
+  int32 creditBalance = 2;
+}

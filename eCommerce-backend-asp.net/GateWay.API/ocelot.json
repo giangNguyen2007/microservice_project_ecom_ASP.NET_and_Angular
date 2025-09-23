@@ -1,0 +1,95 @@
+{
+  "Routes": [
+    
+    {
+      "DownstreamPathTemplate": "/auth/{catchAll}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {"Host": "localhost", "Port": 5259}
+      ],
+      "UpstreamPathTemplate": "/auth/{catchAll}",
+      "UpstreamHttpMethod": ["GET", "PUT", "POST", "DELETE"]
+    },
+
+    {
+      "DownstreamPathTemplate": "/auth",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {"Host": "localhost", "Port": 5259}
+      ],
+      "UpstreamPathTemplate": "/auth",
+      "UpstreamHttpMethod": ["GET", "PUT", "POST", "DELETE"]
+    }
+
+    ,
+
+    {
+      "DownstreamPathTemplate": "/product/{catchAll}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {"Host": "localhost", "Port": 7155}
+      ],
+      "UpstreamPathTemplate": "/product/{catchAll}",
+      "UpstreamHttpMethod": ["GET", "PUT", "POST", "DELETE"]
+    },
+
+    {
+      "DownstreamPathTemplate": "/product",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {"Host": "localhost", "Port": 7155}
+      ],
+      "UpstreamPathTemplate": "/product",
+      "UpstreamHttpMethod": ["GET", "PUT", "POST", "DELETE"]
+    }
+
+    ,
+
+    {
+      "DownstreamPathTemplate": "/orders/{catchAll}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {"Host": "localhost", "Port": 7243}
+      ],
+      "UpstreamPathTemplate": "/orders/{catchAll}",
+      "UpstreamHttpMethod": ["GET", "PUT", "POST", "DELETE"]
+    },
+
+    {
+      "DownstreamPathTemplate": "/orders",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {"Host": "localhost", "Port": 7243}
+      ],
+      "UpstreamPathTemplate": "/orders",
+      "UpstreamHttpMethod": ["GET", "PUT", "POST", "DELETE"]
+    }
+
+    ,
+
+    {
+      "DownstreamPathTemplate": "/payment/{catchAll}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {"Host": "localhost", "Port": 5240}
+      ],
+      "UpstreamPathTemplate": "/payment/{catchAll}",
+      "UpstreamHttpMethod": ["GET", "PUT", "POST", "DELETE"]
+    },
+
+    {
+      "DownstreamPathTemplate": "/payment",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {"Host": "localhost", "Port": 5240}
+      ],
+      "UpstreamPathTemplate": "/payment",
+      "UpstreamHttpMethod": ["GET", "PUT", "POST", "DELETE"]
+    }
+    
+    
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:5160"
+  }
+}

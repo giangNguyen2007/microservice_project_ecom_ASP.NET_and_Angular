@@ -1,0 +1,35 @@
+@Auth.API_HostAddress = http://localhost:5259
+
+GET http://localhost:5259/auth/
+Accept: application/json
+
+###
+
+POST http://localhost:31367/auth/register
+Content-Type: application/json
+
+{
+  "email": "akatsuki@example.com",
+  "password": "SecurePassword123"
+}
+
+###
+
+// get user token
+POST http://localhost:5259/auth/login
+Content-Type: application/json
+
+{
+  "email": "akatsuki@example.com",
+  "password": "SecurePassword123"
+}
+
+###
+// get admin token
+POST http://localhost:5259/auth/login
+Content-Type: application/json
+
+{
+"email": "admin@gmail.com",
+"password": "admin"
+}

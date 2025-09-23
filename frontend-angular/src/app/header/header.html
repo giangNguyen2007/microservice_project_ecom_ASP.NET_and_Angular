@@ -1,0 +1,22 @@
+<div class="header-container">
+  <p routerLink="/" routerLinkActive="active"  [routerLinkActiveOptions]="{ exact: true }">home</p>
+
+  <p  *ngIf="this.isAuthenticated()" class="cart-container" routerLink="/cart"  routerLinkActive="active" >
+  <span class="material-symbols-outlined">
+    cart
+  </span>
+
+    <span class="cart-count">
+    ({{ this.orderCount()}} articles )
+    </span>
+
+  </p>
+
+
+  <p *ngIf="!this.isAuthenticated()" routerLink="/login"  routerLinkActive="active" >login</p>
+
+  <p *ngIf="this.isAuthenticated()"  (click)="onLogoutClick()" >logout</p>
+
+  <p *ngIf="!this.isAuthenticated()" routerLink="/register"  routerLinkActive="active" >register</p>
+
+</div>

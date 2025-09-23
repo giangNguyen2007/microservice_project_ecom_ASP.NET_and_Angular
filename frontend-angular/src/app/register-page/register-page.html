@@ -1,0 +1,43 @@
+
+<div class="login-section">
+
+  <form class="login-form" [formGroup]="registerForm" >
+
+    <div class="login-row">
+      <label for="email">Email:</label>
+      <input type="text" id="email" formControlName="email" >
+
+
+    </div>
+
+    <!--           display error in case of invalid input-->
+    <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+      <span *ngIf="registerForm.get('email')?.errors?.['required']">Email is required.</span>
+      <span *ngIf="registerForm.get('email')?.errors?.['email']">Invalid email format.</span>
+    </div>
+
+    <div class="login-row">
+        <label for="password">Password:</label>
+        <input type="password" id="password" formControlName="password" >
+
+
+    </div>
+
+    <!--           display error in case of invalid input-->
+    <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+      <span *ngIf="registerForm.get('password')?.errors?.['required']">Password is required.</span>
+      <span *ngIf="registerForm.get('password')?.errors?.['minlength']">Min 6 characters.</span>
+    </div>
+
+
+    <button  *ngIf="!this.loginSuccess()"  type="submit" (click)="onRegister()" >Register</button>
+
+
+
+
+  </form>
+
+
+
+
+</div>

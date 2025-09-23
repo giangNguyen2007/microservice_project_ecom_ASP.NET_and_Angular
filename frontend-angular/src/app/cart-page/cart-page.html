@@ -1,0 +1,141 @@
+
+<div class="cart-section">
+  <h2>Contenu du panier :</h2>
+
+  @if (this.currentOrderList().length > 0) {
+    <div class="cart-item-list">
+
+      @for (singleOrder of this.currentOrderList(); track singleOrder.product.id) {
+
+        <article    class="cart-item-card">
+
+            <img [src]="singleOrder.product.photoUrl" alt="{{ singleOrder.product.title }}" class="product-image">
+
+            <div class = "cart-item-details">
+
+              <h3>{{ singleOrder.product.title }}</h3>
+
+              <div class="cart-item-details-sub" >
+
+                <p>Prix: {{ singleOrder.product.price | currency :'EUR'}}</p>
+                <p>Quantite: {{ singleOrder.quantity }}</p>
+                <p>Sous-total: {{ (singleOrder.product.price * singleOrder.quantity) | currency }}</p>
+                <div class="quantity-controls">
+                  <button (click)="this.onIncrementClick(singleOrder.product)">+</button>
+                  <button (click)="this.onDecrementClick(singleOrder.product)">-</button>
+
+                </div>
+
+              </div>
+
+
+            </div>
+
+
+
+        </article>
+      }
+
+    </div>
+
+
+  }
+
+  @else
+  {
+
+    <p>Your cart is empty.</p>
+
+  }
+
+  <div class="payer-button-container">
+
+    <button  class="payer-button"   (click)="this.showCheckoutForm()" [disabled]="this.currentOrderList().length === 0">Passer Commande</button>
+
+  </div>
+
+  <form  class ="paiement-form" *ngIf="this.checkoutFormVisible"  [formGroup]="this.checkoutForm" >
+
+    <h3>Saisir coordonnées de paiement</h3>
+
+    <div  class ="paiement-info-row">
+      <label for="title">Id Utilisateur</label>
+      <input type="text" id="title" formControlName="bankUserId" >
+    </div>
+
+    <div class ="paiement-info-row">
+      <label for="description">Id Compte </label>
+      <input type="text" id="description" formControlName="bankAccountId" >
+    </div>
+
+    <div class ="paiement-from-buttons">
+
+      <!--    <button type="submit" (click)="onSubmit()"  [disabled]="loginForm.invalid">Submit</button>-->
+      <button [disabled]="!this.checkoutFormVisible"  type="submit" (click)="onCheckoutFormSubmit()" >Valider</button>
+      <button [disabled]="!this.checkoutFormVisible"  type="submit" (click)="onCheckoutClose()" >Fermer</button>
+
+    </div>
+
+
+  </form>
+</div>
+
+
+
+
+
+
+
+
+<!--// create elements to display SingleOrder items-->
+
+<!--// display user orders only if logged in-->
+<div  *ngIf="this.userEmail()"  class="past-order-section" >
+
+  @if ( this.userOrderHistory().length === 0 ) {
+    <h3> Aucun commande passe</h3>
+  }
+
+  @else {
+
+    <h2>Historique des commandes pour  {{ this.userEmail()}}</h2>
+
+    <div class="past-order-list">
+
+      @for (order of this.userOrderHistory()?.slice(0,3); track order.id) {
+
+          <div class="order-card">
+            <h3>Id: {{ order.id }}</h3>
+
+            <div class="order-status">
+
+              <p>Statut: {{ order.orderStatus }}</p>
+              <p>Date: {{ order.orderDate | date }}</p>
+
+            </div>
+
+
+            <div class="order-items">
+
+              <h4>Liste des articles:</h4>
+              <ul>
+                @for (item of order.orderItemList; track item.productId) {
+
+                  <li >{{ item.product?.title }}    | Prix : {{ item.product?.price | currency : 'EUR'}}    | Quantite : {{ item.quantity }}</li>
+
+                }
+              </ul>
+
+            </div>
+
+          </div>
+
+      }
+
+    </div>
+
+  }
+
+</div>
+
+

@@ -1,0 +1,41 @@
+
+<div class="login-section">
+
+  <form class="login-form" [formGroup]="loginForm" >
+
+    <div  class="login-row">
+      <label for="email">Email:</label>
+      <input type="text" id="email" formControlName="email" >
+
+    </div>
+    <!--           display error in case of invalid input-->
+    <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+      <span *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</span>
+      <span *ngIf="loginForm.get('email')?.errors?.['email']">Invalid email format.</span>
+    </div>
+
+    <div class="login-row">
+        <label for="password">Password:</label>
+        <input type="password" id="password" formControlName="password" >
+    </div>
+
+    <!--           display error in case of invalid input-->
+    <div  class="login-row" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+      <span *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</span>
+      <span *ngIf="loginForm.get('password')?.errors?.['minlength']">Min 6 characters.</span>
+    </div>
+
+
+<!--    <button type="submit" (click)="onSubmit()"  [disabled]="loginForm.invalid">Submit</button>-->
+    <button  *ngIf="!this.loginSuccess()"  type="submit" (click)="onLogin()" >Login</button>
+
+
+<!--    <div *ngIf="this.loginMessage() != null"  >{{this.loginMessage()}}</div>-->
+
+
+  </form>
+
+
+
+
+</div>

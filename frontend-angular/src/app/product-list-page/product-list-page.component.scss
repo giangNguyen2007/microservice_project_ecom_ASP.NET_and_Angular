@@ -1,0 +1,151 @@
+
+.new-product-section{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin: 20px;
+
+
+
+  .new-product-form{
+    width: 360px;
+    padding: 40px;
+    border-radius: 15px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    background-color: #f0f2f5;
+
+    div{
+      display: flex;
+      justify-content: space-between;
+
+      input{
+        width: 200px;
+      }
+
+      select{
+        width: 210px;
+      }
+    }
+
+    .button-row{
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+
+      button{
+        width: 100px;
+        padding: 10px;
+
+        border: none;
+        border-radius: 10px;
+
+        background-color: darkkhaki;
+        color: white;
+        cursor: pointer;
+
+        &:hover {
+          background-color: goldenrod;
+        }
+      }
+    }
+
+
+
+  }
+
+}
+
+
+
+
+
+
+.product-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+    margin: 20px;
+    background-color: #f0f2f5;
+}
+
+  .product-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+
+
+    gap: 1rem;
+
+    align-items: center;
+    padding: 0px;
+
+  }
+
+    .product-card {
+
+      width: 320px;
+
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 16px;
+
+
+      background: #f9f9f9;
+      margin-bottom: 16px;
+    }
+
+
+        img{
+          max-width: 100%;
+          height: auto;
+          border-radius: 4px;
+          margin-top: 8px;
+        }
+
+
+        .info-row{
+
+          margin-top: 8px;
+          display: flex;
+          justify-content: space-between;
+
+        }
+
+
+        .cart-button-row{
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-top: 12px;
+
+
+          button{
+
+            width: 50px;
+
+            padding: 8px 12px;
+            border: 1px solid gray;
+            border-radius: 4px;
+
+            // set bold font
+            font-weight: bold;
+            font-size: 16px;
+
+            background-color: darkkhaki;
+            color: white;
+            cursor: pointer;
+
+            &:hover {
+              background-color: goldenrod;
+            }
+
+          }
+
+        }

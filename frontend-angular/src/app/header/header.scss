@@ -1,0 +1,35 @@
+.header-container{
+  display: flex;
+  justify-content: right;
+  gap: 5px;
+  align-items: flex-end;
+  padding: 10px 20px;
+  background-color: #f8f8f8;
+  border-bottom: 1px solid #e7e7e7;
+
+
+    p{
+      margin: 5px;
+
+      padding: 8px;
+
+      border-radius: 5px;
+
+
+      font-size: 16px;
+      color: #333;
+      cursor: pointer;
+
+      &:hover {
+        color: white;
+        background-color: darkkhaki;
+
+      }
+    }
+}
+
+
+.active {
+  color: #666;
+  text-decoration: underline;
+}

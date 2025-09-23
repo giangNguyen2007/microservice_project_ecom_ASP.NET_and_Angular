@@ -1,0 +1,110 @@
+
+<div  class="new-product-section">
+
+  <h2>Inserer nouveau produit</h2>
+
+  <form  class="new-product-form" *ngIf="this.isUserAdmin()"  [formGroup]="newProductForm" >
+
+    <div>
+      <label for="title">Titre </label>
+      <input type="text" id="title" formControlName="title" >
+    </div>
+    <div>
+      <label for="description">Description </label>
+      <input type="text" id="description" formControlName="description" >
+    </div>
+
+    <div>
+      <label for="price">Prix </label>
+      <input type="number" id="price" formControlName="price" >
+    </div>
+
+    <div>
+      <label for="stock">Stock </label>
+      <input type="number" id="stock" formControlName="stock" >
+    </div>
+
+    <div>
+      <label for="photoUrl">Photo URL </label>
+      <input type="text" id="photoUrl" formControlName="photoUrl" >
+    </div>
+
+    <div>
+      <label for="dropdown">Categorie </label>
+
+      <select id="dropdown" formControlName="category">
+        @for (opt of this.categoryOptions; track opt.value) {
+
+          <option [value]="opt.value">{{ opt.label }}</option>
+        }
+      </select>
+
+    </div>
+
+    <div  class="button-row">
+      <button [disabled]="!this.loginSuccess()"  type="submit" (click)="createNewProduct()" >Creer</button>
+    </div>
+
+
+  </form>
+
+
+  <div  class="product-section">
+
+<!--      <h2>Liste de comptes actives</h2>-->
+
+      <div  *ngIf="this.bankAccounts() != null" class="product-list">
+
+          @for (product of this.bankAccounts(); track product.id) {
+
+            <div #productCard class="product-card">
+
+              <div class="account-row">
+                <span class="value">{{ product.title }}</span>
+              </div>
+<!--              <div class="account-row">-->
+<!--                <span class="value">{{ product.id }}</span>-->
+<!--              </div>-->
+
+              <img [src]="product.photoUrl" alt="{{ product.title }}" class="product-image"/>
+
+              <div class="info-row">
+
+                <div class="prix-part">
+                  <span class="label">Prix : </span>
+                  <span class="value">{{ product.price | currency : 'EUR'}}</span>
+                </div>
+
+                <div *ngIf="this.isUserAdmin()"  class="stock-part">
+                  <span class="label">Stock : </span>
+                  <span class="value">{{ product.stock }}</span>
+                </div>
+
+              </div>
+
+
+              <div class="cart-button-row">
+                <span class="label">Ajouter  / Enlever du Panier </span>
+                <button [disabled]="!this.loginSuccess()" (click)="onIncrementCartClick(product)" > + </button>
+                <button [disabled]="!this.loginSuccess()" (click)="onDecrementCartClick(product)" > - </button>
+
+              </div>
+
+              <button  *ngIf="this.isUserAdmin()"  [disabled]="!this.loginSuccess()"  > Enlever </button>
+
+            </div>
+
+          }
+
+      </div>
+  </div>
+
+<!--  <transaction-section-->
+<!--    #transactionsSection-->
+<!--    [currentAccount]="selectedAccount()"-->
+<!--    (transactionCreated)="onTransactionCreated($event)"-->
+<!--  >-->
+
+<!--  </transaction-section>-->
+
+</div>

@@ -1,0 +1,22 @@
+services:
+
+  frontend-ecom:
+    image: frontend-ecom:1.0
+    container_name: frontend-ecom
+    ports:
+      - "81:80"
+
+    environment:
+#     requests to backend are sent from brower process in host, not from container
+      ENV_GATEWAY_HOST: localhost
+      ENV_GATEWAY_PORT: 5160
+
+    networks:
+      shared:
+
+networks:
+  shared:
+    external: true
+    name: aspspring-project-net
+
+

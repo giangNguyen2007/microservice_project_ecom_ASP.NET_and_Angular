@@ -1,72 +1,74 @@
 ﻿services:
-
+  
   ecom-gateway-api:
+    build:
+      context: .
+      dockerfile: ./GateWay.API/Dockerfile
     image: ecom-app-gateway-api:1.0
     container_name: ecom-gateway-api
     ports:
       - "5160:8080"
-    
+
     environment:
       DOWNSTREAMAPI__AUTHAPISCHEME: "http"
       DOWNSTREAMAPI__AUTHAPIHOST: ecom-auth-api
       DOWNSTREAMAPI__AUTHAPIPORT: "8080"
-      
+
       DOWNSTREAMAPI__PRODUCTAPISCHEME: "http"
       DOWNSTREAMAPI__PRODUCTAPIHOST: ecom-product-api
       DOWNSTREAMAPI__PRODUCTAPIPORT: "5000"
-      
+
       DOWNSTREAMAPI__ORDERAPISCHEME: "http"
       DOWNSTREAMAPI__ORDERAPIHOST: ecom-order-api
       DOWNSTREAMAPI__ORDERAPIPORT: "8080"
-      
+
       DOWNSTREAMAPI__PAYMENTAPISCHEME: "http"
       DOWNSTREAMAPI__PAYMENTAPIHOST: ecom-payment-api
       DOWNSTREAMAPI__PAYMENTAPIPORT: "8080"
-    
+
       GATEWAYCONFIG__HOST: "localhost"
       GATEWAYCONFIG__PORT: "5160"
-      
+
     networks:
       shared:
   
-
   #========== ACCOUNT API =========
   ecom-auth-api:
+    build:
+      context: .
+      dockerfile: ./Auth.API/Dockerfile
     image: ecom-app-auth-api:1.0
     container_name: ecom-auth-api
     ports:
       - "8086:8080"
-      
+
     volumes:
       - ecom_auth_api_data:/app/Sqlite
     networks:
       shared:
-  
+        
   #========== Product API =========
   ecom-product-api:
+    build:
+      context: .
+      dockerfile: ./ProductAPI/Dockerfile
     image: ecom-app-product-api:1.0
     container_name: ecom-product-api
     ports:
       - "5000:5000"
       - "5001:5001"
     
-    environment:
-      DBCONFIG__HOST: db-product
-      DBCONFIG__PORT: "3306"
-      DBCONFIG__DATABASE: userDb
-      DBCONFIG__USER: myuser
-      DBCONFIG__PASSWORD: mypassword
-    
-    depends_on:
-      db-product:
-        condition: service_healthy
+    volumes:
+      - ecom_product_api_data:/app/Sqlite
 
     networks:
       shared:
- 
   
-  #========== Order API =========
+  
   ecom-order-api:
+    build:
+      context: .
+      dockerfile: ./Order.API/Dockerfile
     image: ecom-app-order-api:1.0
     container_name: ecom-order-api
     ports:
@@ -78,19 +80,43 @@
       DBCONFIG__DATABASE: orderDb
       DBCONFIG__USER: myuser
       DBCONFIG__PASSWORD: mypassword
-      
-      GRPCURL : "http://ecom-product-api:5001"
-      RABBITMQURL : "rabbitmq://rabbitmq"
+
+      GRPCURL: "http://ecom-product-api:5001"
+      RABBITMQURL: "rabbitmq://rabbitmq"
 
     depends_on:
-      db-product:
+      db-order:
         condition: service_healthy
 
     networks:
       shared:
   
+  db-order:
+    image: 'mysql:8'
+    container_name: db-order
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: orderDb
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mypassword
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_order_data:/var/lib/mysql
+    networks:
+      shared:
+        
+        
   #========== PAYMENT API =========
   ecom-payment-api:
+    build:
+      context: .
+      dockerfile: ./Payment.API/Dockerfile
     image: ecom-app-payment-api:latest
     container_name: ecom-payment-api
     ports:
@@ -101,17 +127,18 @@
       APICONFIG__BANKAPPPORT: "8085"
       APICONFIG__GATEWAYHOST: ecom-gateway-api
       APICONFIG__GATEWAYPORT: "8080"
-      
-      RABBITMQURL: "rabbitmq://rabbitmq"
 
-#    depends_on:
-#      rabbitmq-service:
-#        condition: service_started
-        
+      RABBITMQURL: "rabbitmq://rabbitmq"
+    
+    #    depends_on:
+    #      rabbitmq-service:
+    #        condition: service_started
+
     volumes:
       - ecom_payment_api_data:/app/Sqlite
     networks:
       shared:
+  
 
 networks:
   shared:
@@ -119,5 +146,7 @@ networks:
     name: aspspring-project-net
 
 volumes:
-  ecom_auth_api_data:
+  ecom_product_api_data:
   ecom_payment_api_data:
+  ecom_auth_api_data:
+  db_order_data:

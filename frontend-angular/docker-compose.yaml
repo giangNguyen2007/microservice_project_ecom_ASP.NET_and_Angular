@@ -1,7 +1,8 @@
 services:
 
   frontend-ecom:
-    image: frontend-ecom:1.0
+    build:
+      context: .
     container_name: frontend-ecom
     ports:
       - "81:80"

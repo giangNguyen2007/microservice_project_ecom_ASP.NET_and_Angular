@@ -38,16 +38,19 @@ builder.Services.AddControllers();
 
 
 // extract dbConfig 
-var dbConfig = builder.Configuration.GetSection("DbConfig").Get<DbConfig>();
+var sqliteConnectionString = builder.Configuration.GetConnectionString("SqliteConnection");
 
-System.Console.WriteLine(dbConfig.ConnectionString);
+System.Console.WriteLine(sqliteConnectionString);
+System.Console.WriteLine(sqliteConnectionString);
 
 builder.Services.AddDbContext<ProductDBContext>(option =>
 {
-    option.UseMySql(
-        dbConfig.ConnectionString,
-        ServerVersion.AutoDetect(dbConfig.ConnectionString)
-    );
+    // option.UseMySql(
+    //     dbConfig.ConnectionString,
+    //     ServerVersion.AutoDetect(dbConfig.ConnectionString)
+    // );
+    
+    option.UseSqlite(sqliteConnectionString);
 });
 
 builder.Services.AddScoped<IProductRepository, ProductRepository>();

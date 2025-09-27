@@ -1,22 +1,22 @@
 # This is a generated file. Not intended for manual editing.
 services:
-  ecom-auth-api:
+  ecom-product-api:
     build:
       context: "C:\\Users\\raira\\Desktop\\Github_GNG\\microservice_project_ecom_ASP.NET_and_Angular\\\
         backend-asp.net"
-      dockerfile: "./Auth.API/Dockerfile"
-      target: "build"
+      dockerfile: "./ProductAPI/Dockerfile"
     command: []
     entrypoint:
     - "dotnet"
-    - "/app/bin/Debug/net8.0/Auth.API.dll"
+    - "/app/bin/Debug/net8.0/ProductAPI.dll"
     environment:
       ASPNETCORE_ENVIRONMENT: "Development"
-    image: "ecom-app-auth-api:dev"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "ecom-app-product-api:dev"
     ports: []
     volumes:
     - "C:\\Users\\raira\\Desktop\\Github_GNG\\microservice_project_ecom_ASP.NET_and_Angular\\\
-      backend-asp.net\\Auth.API:/app:rw"
+      backend-asp.net\\ProductAPI:/app:rw"
     - "C:\\Users\\raira\\Desktop\\Github_GNG\\microservice_project_ecom_ASP.NET_and_Angular\\\
       backend-asp.net:/src:rw"
     - "C:\\Users\\raira\\.nuget\\packages:/root/.nuget/packages"

@@ -72,6 +72,7 @@ public class ProductController : Controller
     }
 
     [HttpPut("{id:guid}")]
+    [Authorize(Policy = "OnlyAdmin")]
     public async Task<IActionResult> UpdateSingleProduct([FromRoute] Guid id, [FromBody] PutProductDto putProductDto)
     {
         try
@@ -95,7 +96,9 @@ public class ProductController : Controller
      
     }
     
+
     [HttpDelete("{id:guid}")]
+    [Authorize(Policy = "OnlyAdmin")]
     public async Task<IActionResult> DeleteSingleProduct([FromRoute] Guid id)
     {
 
@@ -106,6 +109,6 @@ public class ProductController : Controller
             return NotFound();
         }
 
-        return NoContent();
+        return Ok(product);
     }
 }

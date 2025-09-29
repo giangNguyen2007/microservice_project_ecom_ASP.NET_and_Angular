@@ -52,14 +52,15 @@ export class AuthService {
   }
 
 
-  loginUser( email: string, password: string): void{
+  loginUser( email: string, password: string):  Observable<LoginResponse>{
     // create a json object with email and password
     const loginData = { email, password };
 
-    const res = this.http.post<LoginResponse>(`${this.apiUrl}/login`, loginData);
+    return this.http.post<LoginResponse>(`${this.apiUrl}/login`, loginData).pipe(
 
-    res.subscribe({
-      next: (response => {
+      // handle sucessful response => save data
+      tap( response => {
+
         console.log('login successful, token: ' + response.token);
         console.log('login successful, role: ' + response.role);
 
@@ -70,21 +71,9 @@ export class AuthService {
         localStorage.setItem('token', response.token);
         localStorage.setItem('user', JSON.stringify(this.user()));
 
-
-        this.loginMessage.set("Login successful");
-      }),
-
-      error: (error => {
-        const errorResponse = error as HttpErrorResponse;
-
-        console.log('login failed: ' + (errorResponse.error || errorResponse.statusText));
-
-        this.loginMessage.set("Login failed: " + (errorResponse.message || errorResponse.statusText));
-        // Handle error appropriately
-        throw error;
       })
 
-    });
+    );
 
   }
 

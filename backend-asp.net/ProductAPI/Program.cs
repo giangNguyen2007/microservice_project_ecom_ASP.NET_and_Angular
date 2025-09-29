@@ -122,8 +122,8 @@ app.UseRouting();
 
 app.UseCors();
 
-app.UseAuthentication(); // check 
-app.UseAuthorization();
+// app.UseAuthentication(); // check 
+// app.UseAuthorization();
 
 app.UseMiddleware<UserDataMiddleware>();
 

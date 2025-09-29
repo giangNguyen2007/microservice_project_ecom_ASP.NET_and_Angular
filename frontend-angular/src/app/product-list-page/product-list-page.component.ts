@@ -30,11 +30,26 @@ export class ProductListPage {
 
   loginSuccess = computed( () => this.authService.getToken() != null ) ;
 
-  bankAccounts = computed( () => this.productService.getProductList() ) ;
+  allProducts = computed( () => this.productService.getProductList() ) ;
 
   isUserAdmin = computed( () => this.authService.getUsers()?.role === "admin" ) ;
 
+  categoryFilter = signal<string | null>(null);
 
+  filteredProducts = computed(() => {
+    const products = this.allProducts();
+    const filter = this.categoryFilter();
+
+    if (!filter) {
+      return products;
+    }
+
+    if (!products) {
+      return products;
+    }
+
+    return products.filter(product => product.category === filter);
+  });
 
   myEffect = effect(
     () => {
@@ -132,6 +147,14 @@ export class ProductListPage {
     )
   }
 
+  onFilterButtonClick(category: string | null) : void {
+    this.categoryFilter.set(category);
+  }
+
+  clearFilter() : void {
+    this.categoryFilter.set(null);
+  }
+
 
 
   onIncrementCartClick( product : Product) : void {
@@ -158,29 +181,47 @@ export class ProductListPage {
 
   }
 
-  onTransactionCreated(event: { accoutId: string; pendingAmount: number }){
-    console.log('Transaction created event received in AccountPage for accountId: ' + event.accoutId + ', pendingAmount: ' + event.pendingAmount);
+  onDeleteProductClick( productId : string | null) : void {
 
-    if (!this.bankAccounts()){
+    if (!productId) {
       return;
     }
 
-    // use the non null assertion operator " ! " to tell typescript that bankAccounts is not null
-    const currentAccount : Product[] = this.bankAccounts()!;
-    const updatedAccounts = currentAccount?.map( account => {
-      if ( account.id === event.accoutId) {
-        return { ...account, price: account.price + event.pendingAmount } ;
+    const product = this.productService.getSingleProduct(productId);
+
+    if (!product) {
+      alert('Produit introuvable' );
+      return;
+    }
+
+    const confirmDelete = confirm(`Confirmation de la suppresion du produit: ${product.title} ?`);
+
+    if (!confirmDelete) {
+      return;
+    }
+
+    this.productService.deleteProduct(productId!).subscribe(
+      {
+        next: (response => {
+
+          alert("Suppresion du produit reussie " + product.id);
+
+          this.productService.fetchProducts();
+
+        }),
+
+        error: (error => {
+          const errorResponse = error as HttpErrorResponse;
+          console.log('Status: ' + (errorResponse.status));
+
+          alert("Echecs lors de la suppression " + (errorResponse.error));
+
+        })
+
       }
-      return account;
-    }) ;
-
-    this.productService.updateProductList(updatedAccounts);
-
+    )
 
   }
-
-
-
 
 
 

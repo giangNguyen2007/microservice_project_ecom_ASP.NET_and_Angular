@@ -1,5 +1,5 @@
 ﻿
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM --platform=linux/amd64 mcr.microsoft.com/dotnet/sdk:8.0 AS build
 
 WORKDIR /
 

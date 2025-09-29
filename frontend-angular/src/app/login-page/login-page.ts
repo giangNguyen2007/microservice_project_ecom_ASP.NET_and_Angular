@@ -6,6 +6,7 @@ import {AsyncPipe, DatePipe, NgIf} from '@angular/common';
 import {AuthService} from '../services/auth.service';
 import {Router} from '@angular/router';
 import {ConfigService} from '../services/config.service';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'login-page',
@@ -78,13 +79,31 @@ export class LoginPage implements OnInit {
     const email = this.loginForm.get('email')?.value;
     const password = this.loginForm.get('password')?.value;
 
-    // Here you can handle the login logic, e.g., call an authentication service
     console.log('email:', email);
     console.log('Password:', password);
 
     console.log('send login to server for user ' + email + ' with password ' + password) ;
 
-    this.authService.loginUser(email, password)
+    this.authService.loginUser(email, password).subscribe({
+      next: (response => {
+
+        alert("Login reussi");
+
+        // how to navigate to home page
+        this.rt.navigate(['']);
+
+      }),
+
+      error: (error => {
+        const errorResponse = error as HttpErrorResponse;
+
+        console.log('login failed: ' + (errorResponse.error || errorResponse.statusText));
+        alert("Login echoue: " + errorResponse.message);
+        // Handle error appropriately
+
+      })
+
+    });
   }
 
   onLogout() : void {

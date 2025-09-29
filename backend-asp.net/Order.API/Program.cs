@@ -43,8 +43,6 @@ builder.Services.AddScoped<OrderService>();
 // ================ GRPC ===============
 // allow unencrypted grpc calls
 
-
-
 var grpcUrl = builder.Configuration["GrpcUrl"];
 
 System.Console.WriteLine("GrpcUrl: " + grpcUrl);
@@ -90,8 +88,6 @@ builder.Services.AddScoped<MtPaymentRequestPublisher>();
 
 builder.Services.AddControllers();
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)  // register Registers the authentication middleware in the DI container.

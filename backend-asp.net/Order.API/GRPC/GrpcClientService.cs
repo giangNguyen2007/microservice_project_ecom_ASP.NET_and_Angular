@@ -23,7 +23,7 @@ public class GrpcClientService
         var reservationRequest = new ReservationRequest();
         foreach (var item in postOrderDto.Items)
         {
-            reservationRequest.OrderItemList.Add(new SingleOrderItem // from Product.proto, avoid confusion
+            reservationRequest.OrderItemList.Add(new SingleOrderItem 
             {
                 ProductId = item.ProductId.ToString(),
                 Quantity = item.Quantity
@@ -48,7 +48,7 @@ public class GrpcClientService
         var request = new StockUpdateRequest();
         foreach (var item in order.OrderItemList)
         {
-            request.OrderItemList.Add(new SingleOrderItem // from Product.proto, avoid confusion
+            request.OrderItemList.Add(new SingleOrderItem 
             {
                 ProductId = item.ProductId.ToString(),
                 Quantity = item.Quantity

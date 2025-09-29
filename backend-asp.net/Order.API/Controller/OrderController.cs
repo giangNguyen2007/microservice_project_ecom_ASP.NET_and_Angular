@@ -66,7 +66,7 @@ public class OrderController : Microsoft.AspNetCore.Mvc.Controller
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById([FromRoute] Guid id)
     {
-        //await _massTransitService.SendRequestForResponseAsync(1);
+       
 
         try
         {

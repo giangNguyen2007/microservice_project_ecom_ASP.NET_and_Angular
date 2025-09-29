@@ -1,11 +1,8 @@
 using Auth.API.GrpcServices;
 using Auth.API.Model;
 using Auth.API.Service;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using SharedLibrary.JwtSetting;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +11,7 @@ builder.Logging.ClearProviders();  // Clear default logging providers
 builder.Logging.AddConsole();
 
 
-// ==== register Database MySQL ======
+// ==== register Database ======
 CustomStaticRegistrationService.registerDbContext(builder);
 
 builder.Services.AddScoped<IPasswordHasher<UserModel>, PasswordHasher<UserModel>>();
@@ -42,10 +39,13 @@ builder.Services.AddCors(options =>
 });
 
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+
+
+// ================ app Config ====================
 
 var app = builder.Build();
 
@@ -62,11 +62,11 @@ app.UseRouting();
 
 app.UseCors();
 
-app.UseAuthentication(); // check 
+app.UseAuthentication(); 
 app.UseAuthorization();
 
 app.MapControllers();
-app.MapGrpcService<GrpcUserInfoServer>(); // New gRPC service
+app.MapGrpcService<GrpcUserInfoServer>(); 
 
 app.Run();
 

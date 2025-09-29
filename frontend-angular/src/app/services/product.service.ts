@@ -57,6 +57,19 @@ export class ProductService {
 
   }
 
+  deleteProduct(productId : string): Observable<any>  {
+
+    if (!this.authService.getToken() || !this.authService.getUsers()) {
+      return new Observable(observer => {
+        observer.error(new Error('Authentication required: Token or user not found'));
+      });
+    }
+
+    // jwt token is added in header by the Interceptor
+    return this.http.delete<any>(this.apiUrl + "/" + productId);
+
+  }
+
   fetchProducts(): void  {
 
     if (!this.authService.getToken() || !this.authService.getUsers() ) {

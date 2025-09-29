@@ -12,9 +12,8 @@ public class PostOrderDto
     
     
     //payment info
-    //simulation : userId, bank accountId
+    // userId, bank accountId
     // to be sent to payment microservice
-    
     [Required] public Guid BankUserId { get; set; }
     
     [Required] public Guid BankAccountId { get; set; }

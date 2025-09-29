@@ -1,6 +1,6 @@
 {
-  "apiUrl": "http://{GATEWAY_HOST}:{GATEWAY_PORT}",
+  "apiUrl2": "http://{GATEWAY_HOST}:{GATEWAY_PORT}",
 
-  "apiUrl2": "http://localhost:5160",
+  "apiUrl": "http://localhost:5160",
   "customSetting": "myValue"
 }

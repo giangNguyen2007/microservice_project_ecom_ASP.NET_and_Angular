@@ -1,9 +1,9 @@
 
 <div  class="new-product-section">
 
-  <h2>Inserer nouveau produit</h2>
+  <h2 *ngIf="this.isUserAdmin()" >Inserer nouveau produit</h2>
 
-  <form  class="new-product-form" *ngIf="this.isUserAdmin()"  [formGroup]="newProductForm" >
+  <form *ngIf="this.isUserAdmin()"  class="new-product-form"  [formGroup]="newProductForm" >
 
     <div>
       <label for="title">Titre </label>
@@ -53,18 +53,28 @@
 
 <!--      <h2>Liste de comptes actives</h2>-->
 
-      <div  *ngIf="this.bankAccounts() != null" class="product-list">
+      <div class="filter-row">
+        <label for="filter">Filtrer par categorie: </label>
 
-          @for (product of this.bankAccounts(); track product.id) {
+        <button  (click)="onFilterButtonClick('PHONES')"> Phones </button>
+        <button   (click)="onFilterButtonClick('TABLETTES')"> Tablettes </button>
+        <button   (click)="onFilterButtonClick('ORDINATEURS')"> Ordinateur </button>
+        <button   (click)="clearFilter()"> Tous </button>
+
+      </div>
+
+      <div *ngIf="this.filteredProducts() != null" class="product-list">
+
+          @for (product of this.filteredProducts(); track product.id) {
 
             <div #productCard class="product-card">
 
-              <div class="account-row">
+              <div class="title-row">
                 <span class="value">{{ product.title }}</span>
+
+                <span class="value">{{ product.category }}</span>
               </div>
-<!--              <div class="account-row">-->
-<!--                <span class="value">{{ product.id }}</span>-->
-<!--              </div>-->
+
 
               <img [src]="product.photoUrl" alt="{{ product.title }}" class="product-image"/>
 
@@ -90,7 +100,7 @@
 
               </div>
 
-              <button  *ngIf="this.isUserAdmin()"  [disabled]="!this.loginSuccess()"  > Enlever </button>
+              <button  *ngIf="this.isUserAdmin()"  [disabled]="!this.loginSuccess()"  (click)="onDeleteProductClick(product.id)"> Supprimer </button>
 
             </div>
 

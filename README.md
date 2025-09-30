@@ -1,10 +1,20 @@
-# microservice_project_ecom_ASP.NET_and_Angular
+# Microservice project - ecommerce application with backend in ASP.NET and frontend in Angular
 
-Microservice project - the ecommerce application with backend in ASP.NET and frontend in Angular
+This is the part A of my project. The part B, which should be launched after part A, consists of a bank application which handles payment for orders placed on this ecommerce site. [Link to Part B](https://github.com/giangNguyen2007/microservice_project_part2_bank_SpringBoot_and_Angular)
 
-I have spent most of time on learning to develop the two backend applications. This leaves me with only little time to learn Angular and develop frontend feature before the start of new semester at ENSIMAG. The deployment on Docker-Compose alto takes a lot of time as inter-container communication leads to complication that requires code adjustement. 
 
-Thus i have to accept to present this frontend version with just basic functionalities. More advanced features could be added during the semester. 
+### Note on limited time available for frontend part
+
+<span style="color: orange;">I have spent most of time on learning to develop the two backend applications in Spring & ASP.NET, which are not part of ENSIMAG cursus. The microservices in themselves are similar in structure and thus do not take too much time, but learning to apply gRPC and rabbitMQ communication between them, then ensuring correct message exchange (with automatic and manuel testing) are quite time-consuming.  
+This leaves me with only little time to learn Angular and develop 2 frontends (part A & B) before the start of new semester at ENSIMAG. The deployment on Docker-Compose alto takes a lot of time as inter-container communication leads to complication that requires further adjustement.</span>
+
+<span style="color: orange;">Thus I have to accept to present a frontend version with just basic functionalities. More advanced features could be added during the semester.  </span>
+
+
+### Note on AI usage
+For this project, I use extensively chatGPT, but as a web search replacement and learning tool, not a thinking or problem solving tool. Without AI, I still have to go on Google to search for : information, how to use different framework, packages, tool, what is coding best practice in different situation, what this error message means. ChatGPT for me is just a much faster and more powerful search engine, which can answer my questions in a more precise way and on a deeper level.
+
+With Copilot, I dont use agence mode (I have turn it off after first try, as it makes me feel losing control of my code base), just chat mode for question & answer. It helps me code faster by filling code snippets. I understand the meaning of each line of code, each service's architecture, and can recreate all the project without using AI. 
 
 
 ## 1. Application Launch Steps
@@ -63,10 +73,24 @@ The application is composed of 5 microservices:
 + OrderAPI: handles Order CRUD operations. At order creation request, it communicates with `ProductAPI` (via GRPC channel) to reserve stock, and publish new payment event (via RabbitMQ) to `PaymentAPI`. 
 + PaymentAPI : handle payment operation and  communication with Bank application 
 
-
 To avoid creating too many containers, I have replaced most of MySQL databases, chosen initially, by Sqlite, which allows storing database file inside the API container. 
 
 ![Asp.net Endpoints](./bankApp_ASP.NET-.NET%20Backend%20General%20Schema.drawio.png)
+
+<!-- ## 2.1 technical highlights
+
+I would like to hightlight the folollwing technical points :
+- Separation of concern: separate service layers for database interaction, grpc & rabbitMQ communication are handled in separate services in each API
+- Authentication is performed at Gateway level, which decodes Jwt token then attachs user info to the Request Object. At Downstream API, request passes through authentication Interceptor before reaching controller.  
+- Any database services' function involving more than one database operations is annotated with @Transaction -->
+
+
+Further improvement idea (if time available):
+- implement concurrency control on database operations
+- deployment on Kubernetes to get service replication 
+- apply SAGA pattern to ensure coherent data state between (rollback in case of failure )
+- implement retry mechanism in case of message transfer failure
+- implement idempotency
 
 
 ## 2.2 Services communication
@@ -80,13 +104,9 @@ RabbitMq is used for asynchronous message exchange between `OrderAPI` and `Payme
 
 
 
-### 2.2.3 Http communication to Bank application
-
 
 # 3. Frontend Application overview
 
-
-## 3.1 Site interface
 
 The frontend allows user to perform the following actions:
 - Register and login as normal user 

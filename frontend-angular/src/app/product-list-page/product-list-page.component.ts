@@ -1,4 +1,4 @@
-import {Component, computed, effect,  signal,  ViewChild} from '@angular/core';
+import {Component, computed, effect,  OnInit,  signal,  ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 
 import {CurrencyPipe, NgIf, SlicePipe} from '@angular/common';
@@ -21,12 +21,22 @@ import {OrderService} from '../services/orderService';
   templateUrl: './product-list-page.component.html',
   styleUrl: './product-list-page.component.scss'
 })
-export class ProductListPage {
+export class ProductListPage implements OnInit {
 
 
   newProductForm! : FormGroup;
 
 
+  urlRegex = /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&/=]*)/;
+
+  categoryOptions = [
+    { value: 'PHONES', label: 'Phones' },
+    { value: 'TABLETTES', label: 'Tablette' },
+    { value: 'ORDINATEURS', label: 'Ordinateur' }
+  ];
+
+
+  // =========== SIGNAL DEFINITION ===============
 
   loginSuccess = computed( () => this.authService.getToken() != null ) ;
 
@@ -51,22 +61,18 @@ export class ProductListPage {
     return products.filter(product => product.category === filter);
   });
 
-  myEffect = effect(
-    () => {
+  // myEffect = effect(
+  //   () => {
 
-        if (this.loginSuccess()) {
-          this.productService.fetchProducts();
-        }
-    }
-  )
+  //       if (this.loginSuccess()) {
+  //         this.productService.fetchProducts();
+  //       }
+  //   }
+  // )
 
-  urlRegex = /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&/=]*)/;
 
-  categoryOptions = [
-    { value: 'PHONES', label: 'Phones' },
-    { value: 'TABLETTES', label: 'Tablette' },
-    { value: 'ORDINATEURS', label: 'Ordinateur' }
-  ];
+
+  // ============== METHODS DEFINITIONS =============================
 
   constructor(private formBuilder: FormBuilder,
               private authService : AuthService,
@@ -76,6 +82,14 @@ export class ProductListPage {
     this.initLoginForm(formBuilder);
 
   }
+
+  ngOnInit(): void {
+
+      console.log("product page init run")
+      this.productService.fetchProducts()
+  }
+
+
 
 
   initLoginForm(formBuilder: FormBuilder) : void {

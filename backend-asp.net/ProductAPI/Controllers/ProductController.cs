@@ -27,6 +27,7 @@ public class ProductController : Controller
     //  === GET ====
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<IActionResult> GetAll()
     {
         List<ProductModel> products = await _productRepo.getAllAsync();
@@ -38,6 +39,7 @@ public class ProductController : Controller
     }
 
     [HttpGet("{id:guid}")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetById([FromRoute] Guid id)
     {
         //await _massTransitService.SendRequestForResponseAsync(1);

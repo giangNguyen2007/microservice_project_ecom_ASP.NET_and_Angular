@@ -72,9 +72,14 @@ export class ProductService {
 
   fetchProducts(): void  {
 
-    if (!this.authService.getToken() || !this.authService.getUsers() ) {
+    // if (!this.authService.getToken() || !this.authService.getUsers() ) {
 
-      return ;
+    //   return ;
+    // }
+
+    // does not fetch if productList has already been fetched
+    if (this.prductList()){
+      return;
     }
 
     this.http.get<Product[]>(this.apiUrl).subscribe(
@@ -91,7 +96,7 @@ export class ProductService {
 
           console.log('Status: ' + (errorResponse.status ));
 
-          console.log('fetch accounts failed: ' + (errorResponse.error));
+          console.log('fetch products failed: ' + (errorResponse.error));
 
         })
 
@@ -102,12 +107,17 @@ export class ProductService {
 
   }
 
+
   updateProductList(updatedList: Product[]){
     this.prductList.set(updatedList);
   }
 
   getProductList() : Product[] | null {
     return this.prductList();
+  }
+
+  getProductListLength() : number | undefined {
+    return this.prductList()?.length;
   }
 
 

@@ -14,6 +14,15 @@ public class UserDataMiddleware
     
     public async Task InvokeAsync(HttpContext context)
     {
+        
+        // exclude /product GET requests from authentication
+        if (context.Request.Path == "/product" && context.Request.Method == HttpMethods.Get)
+        {
+            Console.WriteLine("UserDataMiddleware: Skipping authentication for " + context.Request.Path );
+            await _next(context);
+            return;
+        }
+        
         // context.Users.Identity is populated by the authentication middleware
         // context.User.Identity contains claims from the JWT token
         if (context.User.Identity?.IsAuthenticated == true)

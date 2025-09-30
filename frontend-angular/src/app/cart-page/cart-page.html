@@ -19,7 +19,7 @@
 
                 <p>Prix: {{ singleOrder.product.price | currency :'EUR'}}</p>
                 <p>Quantite: {{ singleOrder.quantity }}</p>
-                <p>Sous-total: {{ (singleOrder.product.price * singleOrder.quantity) | currency }}</p>
+                <p>Sous-total: {{ (singleOrder.product.price * singleOrder.quantity) | currency :'EUR' }}</p>
                 <div class="quantity-controls">
                   <button (click)="this.onIncrementClick(singleOrder.product)">+</button>
                   <button (click)="this.onDecrementClick(singleOrder.product)">-</button>

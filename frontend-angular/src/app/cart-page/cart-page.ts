@@ -187,6 +187,7 @@ export class CartPage {
       next: (response : RegisteredOrder[]) => {
         console.log('Orders fetched successfully:', response);
 
+        this.productService.fetchProducts();
 
         // the backend sends single order item with only productId and quantity
         // to display order with product info, we need to fetch product details from productService
@@ -194,11 +195,13 @@ export class CartPage {
         const response_with_product_info : RegisteredOrder[] = response.map((order: RegisteredOrder) => {
 
           const orderItemList_with_product_info =  order.orderItemList.map(
-            (order : SingleRegisteredOrder) => (
-              {
+            (order : SingleRegisteredOrder) => ({
+          
                 ...order,
                 product : this.productService.getSingleProduct(order.productId) || null
+
               } as SingleRegisteredOrder
+        
             )
           )
 

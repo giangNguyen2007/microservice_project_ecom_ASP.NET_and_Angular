@@ -12,19 +12,13 @@ The two applications are linked in the payment process : The ecommerce applicati
 I have developed this project as a way to learn ASP.NET, SPRING, Angular as well as microservice backend development. 
 
 
-### Note on time constraint on frontend development
+### Note on time constraint for frontend development
 
 <span style="color: orange;"> Planning initially to create only the 2 backend microservice applications in Spring & ASP.NET, I have spent most of time on learning them, which are not part of ENSIMAG cursus. The microservices in themselves are similar in structure and thus do not take too much time, but learning to apply gRPC and rabbitMQ communication between them, then ensuring correct message exchange (with automatic and manuel testing) are quite time-consuming.  
 
 This leaves me with only little time to learn Angular and develop 2 frontends (part A & B) before the start of new semester at ENSIMAG. The deployment on Docker-Compose alto takes a lot of time as inter-container communication leads to complication that requires further adjustement.</span>
 
 <span style="color: orange;">Thus I have to accept to present a frontend version with just basic functionalities. More advanced features could be added during the semester.  </span>
-
-
-### Note on AI usage in this project
-For this project, I use extensively chatGPT, but as a web search replacement and learning tool, not a thinking or problem solving tool. Without AI, I still have to go on Google to search for : information, how to use different framework, packages, tool, what is coding best practice in different situation, what this error message means. ChatGPT for me is just a much faster and more powerful search engine, which can answer my questions in a more precise way and on a deeper level.
-
-With Copilot, I dont use agence mode (I have turn it off after first try, as it makes me feel losing control of my code base), just chat mode for question & answer. It helps me code faster by filling code snippets. I understand the meaning of each line of code, each service's architecture, and can recreate all the project without using AI. 
 
 
 ## 1. Application Launch Steps

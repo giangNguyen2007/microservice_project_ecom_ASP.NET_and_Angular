@@ -16,7 +16,7 @@ I have developed this project as a way to learn ASP.NET, SPRING, Angular as well
 
 <span style="color: orange;"> Planning initially to create only the 2 backend microservice applications in Spring & ASP.NET, I have spent most of time on learning them, which are not part of ENSIMAG cursus. The microservices in themselves are similar in structure and thus do not take too much time, but learning to apply gRPC and rabbitMQ communication between them, then ensuring correct message exchange (with automatic and manuel testing) are quite time-consuming.  
 
-This leaves me with only little time to learn Angular and develop 2 frontends (part A & B) before the start of new semester at ENSIMAG. The deployment on Docker-Compose alto takes a lot of time as inter-container communication leads to complication that requires further adjustement.</span>
+This leaves me with only little time to learn Angular and develop 2 frontends (part A & B) before the start of new semester at ENSIMAG. The deployment on Docker-Compose has also taken a lot of time because inter-container communication leads to complication that requires further adjustement.</span>
 
 <span style="color: orange;">Thus I have to accept to present a frontend version with just basic functionalities. More advanced features could be added during the semester.  </span>
 
